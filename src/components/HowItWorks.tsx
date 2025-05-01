@@ -78,7 +78,7 @@ const HowItWorks = () => {
                     <div className="h-full w-full flex items-center justify-center">
                       <div className="text-white text-center">
                         <div className="font-bold">Send</div>
-                        <div className="text-xs opacity-75">₦ 2,000</div>
+                        <div className="text-xs opacity-75">₦ 2,000,000</div>
                       </div>
                     </div>
                   </div>
