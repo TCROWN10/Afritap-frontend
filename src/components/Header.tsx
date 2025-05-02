@@ -48,7 +48,6 @@ const Header = () => {
         <a href="#" className={navLinkClass}>Home</a>
         <a href="#" className={navLinkClass}>About</a>
         <a href="#" className={navLinkClass}>Services</a>
-        <a href="#" className={navLinkClass}>Resources</a>
         <a href="#" className={navLinkClass}>Contact</a>
       </nav>
 
