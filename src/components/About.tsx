@@ -52,20 +52,20 @@ const About = () => {
                     {/* Mock African mobile money interface */}
                     <div className="h-full w-full bg-ivory p-4 flex flex-col">
                       <div className="mb-4 flex justify-between items-center">
-                        <div className="font-bold text-primary">AfriTap</div>
+                        <div className="font-bold text-gray-600 dark:text-gray-300">AfriTap</div>
                         <div className="w-8 h-8 rounded-full bg-primary/20"></div>
                       </div>
                       
                       <div className="bg-white rounded-lg p-4 mb-4 shadow-sm">
-                        <div className="text-sm text-gray-500">Savings Group</div>
-                        <div className="font-bold text-lg">Lagos Traders</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">Savings Group</div>
+                        <div className="font-bold text-lg text-gray-600 dark:text-gray-300">Lagos Traders</div>
                         <div className="flex justify-between mt-2">
                           <div>
-                            <div className="text-xs text-gray-500">Group Balance</div>
-                            <div className="font-semibold">₦ 245,000</div>
+                            <div className="text-xs text-gray-600 dark:text-gray-300">Group Balance</div>
+                            <div className="font-semibold text-gray-600 dark:text-gray-300">₦ 245,000</div>
                           </div>
                           <div>
-                            <div className="text-xs text-gray-500">Your Share</div>
+                            <div className="text-xs text-primary">Your Share</div>
                             <div className="font-semibold">₦ 24,500</div>
                           </div>
                         </div>
@@ -73,7 +73,7 @@ const About = () => {
                       
                       <div className="bg-white rounded-lg p-4 shadow-sm mb-6">
                         <div className="flex justify-between items-center mb-3">
-                          <div className="font-semibold">Recent Activity</div>
+                          <div className="font-semibold text-gray-600 dark:text-gray-300">Recent Activity</div>
                           <div className="text-xs text-primary">View All</div>
                         </div>
                         
@@ -82,22 +82,22 @@ const About = () => {
                             <div className="flex items-center">
                               <div className="w-8 h-8 rounded-full bg-primary/10 mr-2"></div>
                               <div>
-                                <div className="text-sm font-medium">Sent to John</div>
-                                <div className="text-xs text-gray-500">Today, 10:24 AM</div>
+                                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Sent to John</div>
+                                <div className="text-xs text-gray-600 dark:text-gray-300">Today, 10:24 AM</div>
                               </div>
                             </div>
-                            <div className="text-sm font-medium">-₦ 500</div>
+                            <div className="text-sm font-medium text-gray-600 dark:text-gray-300">-₦5,000,000</div>
                           </div>
                           
                           <div className="flex justify-between items-center py-2">
                             <div className="flex items-center">
                               <div className="w-8 h-8 rounded-full bg-green-100 mr-2"></div>
                               <div>
-                                <div className="text-sm font-medium">Group Deposit</div>
-                                <div className="text-xs text-gray-500">Yesterday</div>
+                                <div className="text-sm font-medium text-gray-600 dark:text-gray-300">Group Deposit</div>
+                                <div className="text-xs text-gray-600 dark:text-gray-300">Yesterday</div>
                               </div>
                             </div>
-                            <div className="text-sm font-medium text-green-600">+₦ 2,000</div>
+                            <div className="text-sm font-medium text-green-600">+₦ 2,000,000</div>
                           </div>
                         </div>
                       </div>
