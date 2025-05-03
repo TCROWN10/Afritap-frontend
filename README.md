@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
+## Overview
 
-## Project info
+AfriTap is an innovative financial technology platform designed to provide simple, accessible financial solutions for everyone in Africa. Our mission is to empower individuals and businesses across the continent with AI-powered payment solutions, banking services, and financial tools tailored to the African context. Through a combination of advanced technology and local expertise, we're working to accelerate financial inclusion and economic growth across Africa.
 
-**URL**: https://lovable.dev/projects/a3eb5c25-c0df-4b56-8806-b5b01d29fef3
+## Features
 
-## How can I edit this code?
+### Core Services
 
-There are several ways of editing your application.
+- **Tap-to-Pay**: Contactless payment solutions for quick and secure transactions
+- **USSD Banking**: Access financial services without internet via simple phone commands
+- **Group Savings**: Collaborative savings tools inspired by traditional African saving circles
+- **Microloans**: Small, accessible loans designed for entrepreneurs and small businesses
+- **Merchant Services**: Payment processing solutions for businesses of all sizes
 
-**Use Lovable**
+### Vendor Network
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a3eb5c25-c0df-4b56-8806-b5b01d29fef3) and start prompting.
+- **Find Vendors**: Search for local merchants, suppliers, and service providers across Africa
+- **Vendor Profiles**: Detailed information about each vendor including ratings, specialties, and contact information
+- **Location-Based Search**: Find vendors near you with our map-based interface
+- **Direct Connection**: Connect directly with vendors through our secure messaging system
+- **Verified Vendors**: All vendors are verified to ensure quality and authenticity
+- **Community Building**: Join our growing community of over 300+ vendors across 12 African countries
 
-Changes made via Lovable will be committed automatically to this repo.
+### AI-Powered Features
 
-**Use your preferred IDE**
+- **AfriTap AI Assistant**: Conversational AI that helps users navigate financial services, answer questions, and execute transactions through natural language commands
+- **Business Advisor AI**: AI-powered insights and recommendations for small businesses, including cash flow forecasting, inventory management advice, and business growth strategies
+- **Financial Inclusion AI**: Specialized algorithms that assess creditworthiness using alternative data points, expanding access to financial services for unbanked and underbanked populations
+- **Fraud Detection**: AI systems that monitor transactions in real-time to detect and prevent fraudulent activities
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Financial Education
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Interactive learning modules on financial literacy
+- Personalized financial planning tools
+- Community forums for knowledge sharing
 
-Follow these steps:
+### Platform Capabilities
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- Cross-border payments and remittances
+- Multi-currency support
+- Offline transaction capabilities
+- API integrations for businesses and developers
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Technology Stack
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Mobile Application
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+- **Framework**: React Native (Expo)
+- **State Management**: Redux / Context API
+- **API Integration**: Axios / React Query
+- **Authentication**: JWT / OAuth
+- **Offline Support**: AsyncStorage / SQLite
+- **UI Component Library**: Custom components with native styling
 
-**Edit a file directly in GitHub**
+### Web Dashboard
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **Frontend**: React, TypeScript
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui
+- **API Client**: React Query / Axios
 
-**Use GitHub Codespaces**
+### Backend
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **API Layer**: Node.js
+- **Database**: Firebase
+- **Authentication**: OAuth 2.0 / JWT
+- **AI Processing**: Gpt 4.0
+- **Natural Language Processing**: GPT models 
+- **BlockChain**: Smart Contract
 
-## What technologies are used for this project?
+### AI Infrastructure
 
-This project is built with:
+- **Models**: Fine-tuned LLMs for finance
+- **Data Processing**: Real-time transaction analysis
+- **Deployment**: Containerized microservices
+- **Continuous Learning**: Feedback loops for model improvement
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Contact
 
-## How can I deploy this project?
+- PitchDeck: [AfriTap-PitchDeck] (https://www.canva.com/design/DAGmMZJDM28/k6qmNirMQlLxb0vtNLQolQ/view?utm_content=DAGmMZJDM28&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h416b50ddeb)
+- Live Link: [Front-end Vercel](https://afritap-frontend.vercel.app/)
+- Email: afritapofficial@gmail.com
+- Twitter: [@AfriTap](https://x.com/afritapofficial?s=21)
 
-Simply open [Lovable](https://lovable.dev/projects/a3eb5c25-c0df-4b56-8806-b5b01d29fef3) and click on Share -> Publish.
+## Acknowledgements
 
-## Can I connect a custom domain to my Lovable project?
+- The African tech community for continuous support and inspiration
+- Financial inclusion organizations and partners across Africa
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+© 2025 AfriTap. All rights reserved. Made with ❤️ for Africa.
