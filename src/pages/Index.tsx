@@ -10,6 +10,7 @@ import HowItWorks from '@/components/HowItWorks';
 // import Testimonials from '@/components/Testimonials';
 import Stats from '@/components/Stats';
 import AIBusiness from '@/components/AIBusiness';
+import TeamSection from '@/components/TeamSection';
 import About from '@/components/About';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
@@ -20,10 +21,12 @@ const Index = () => {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <Features />
+          <Features />
         <HowItWorks />
-        <Stats />
-        <AIBusiness />
+        <section id="services">
+          <Stats />
+          <AIBusiness />
+        </section>
          {/* Vendor Network Promotion Section */}
          <section className="py-12 bg-white dark:bg-gray-800">
           <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
@@ -68,9 +71,14 @@ const Index = () => {
             </div>
           </div>
         </section>
+        <TeamSection />
         {/* <Testimonials /> */}
+        <section id="about">
         <About />
-        <CTA />
+        </section>
+        <section id="contact">
+          <CTA />
+        </section>
       </main>
       <Footer />
     </div>

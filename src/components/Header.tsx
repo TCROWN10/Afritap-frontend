@@ -3,6 +3,7 @@ import { Sun, Moon, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Link, useLocation } from "react-router-dom";
+import ConnectWalletButton from "./ConnectWalletButton";
 
 const Header = () => {
   const [mounted, setMounted] = useState(false);
@@ -103,9 +104,10 @@ const Header = () => {
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         )}
-        <Button className="bg-[#2E7D32] hover:bg-green-700 text-white rounded-full px-6">
+        {/* <Button className="bg-[#2E7D32] hover:bg-green-700 text-white rounded-full px-6">
           Connect Wallet
-        </Button>
+        </Button> */}
+        <ConnectWalletButton />
       </div>
 
       {/* Mobile Menu Toggle + Theme Toggle (Mobile) */}
@@ -141,9 +143,10 @@ const Header = () => {
           <button onClick={() => scrollToSection("services")} className="text-sm font-medium text-black dark:text-white text-left w-full">Services</button>
           <Link to="/vendor-network" className="text-sm font-medium text-black dark:text-white" onClick={() => setMobileMenuOpen(false)}>Vendor Network</Link>
           <button onClick={() => scrollToSection("contact")} className="text-sm font-medium text-black dark:text-white text-left w-full">Contact</button>
-          <Button className="bg-[#2E7D32] hover:bg-green-700 text-white rounded-full w-full mt-2">
+          {/* <Button className="bg-[#2E7D32] hover:bg-green-700 text-white rounded-full w-full mt-2">
             Connect Wallet
-          </Button>
+          </Button> */}
+            <ConnectWalletButton className="bg-[#2E7D32] hover:bg-green-700 text-white rounded-full w-full mt-2" />
         </div>
       )}
     </header>
