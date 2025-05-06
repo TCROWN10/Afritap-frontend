@@ -24,7 +24,7 @@ const teamMembers: TeamMember[] = [
     name: "Olubukola Martins",
     role: "Team Lead",
     image: "https://res.cloudinary.com/detc4yjdi/image/upload/v1746353220/Bukola-Afritap_toqtfc.png",
-    bio: "Technical PM | Business Developer"
+    bio: "Technical PM | Software Developer"
   },
   {
     id: 2,
