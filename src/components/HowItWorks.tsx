@@ -99,7 +99,7 @@ const HowItWorks = () => {
               </div>
               
               <div className="mt-8 text-center">
-                <a href="#" className="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors">
+                <a href="https://drive.google.com/file/d/1vQ-xyVe8GGqh9sZuhVoc7lccLvPCwIYD/view?usp=drivesdk" className="inline-flex items-center text-primary font-medium hover:text-primary/80 transition-colors">
                   Watch full demo <ArrowRight className="ml-2 h-4 w-4" />
                 </a>
               </div>
