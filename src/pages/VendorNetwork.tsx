@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Search, Users, MapPin, Award, MessageSquare } from 'lucide-react';
+import { Search, Users, MapPin, Award, MessageSquare, List, Map } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from "@/components/ui/use-toast";
+import MapView from '@/components/MapView';
 
 // Mock vendor data
 const vendorData = [
@@ -58,6 +59,7 @@ const vendorData = [
 const VendorNetwork = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredVendors, setFilteredVendors] = useState(vendorData);
+  const [viewMode, setViewMode] = useState<"list" | "map">("list");
   const { toast } = useToast();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -93,6 +95,14 @@ const VendorNetwork = () => {
     window.open("https://afritap.com/download", "_blank");
   };
 
+  const toggleView = () => {
+    setViewMode(viewMode === "list" ? "map" : "list");
+    toast({
+      title: `Switched to ${viewMode === "list" ? "map" : "list"} view`,
+      duration: 1500,
+    });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -121,9 +131,19 @@ const VendorNetwork = () => {
                     variant="outline" 
                     className="border-2 border-white text-white hover:bg-white/20 px-6 py-6 rounded-lg flex items-center justify-center gap-2"
                     size="lg"
+                    onClick={toggleView}
                   >
-                    <MapPin className="h-5 w-5" />
-                    Map View
+                    {viewMode === "list" ? (
+                      <>
+                        <Map className="h-5 w-5" />
+                        Map View
+                      </>
+                    ) : (
+                      <>
+                        <List className="h-5 w-5" />
+                        List View
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -159,64 +179,91 @@ const VendorNetwork = () => {
                 Search
               </Button>
             </form>
+            <div className="flex justify-end mt-4">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={toggleView}
+                className="flex items-center gap-2"
+              >
+                {viewMode === "list" ? (
+                  <>
+                    <Map className="h-4 w-4" />
+                    Map View
+                  </>
+                ) : (
+                  <>
+                    <List className="h-4 w-4" />
+                    List View
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
 
+        {/* Map View */}
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6 pb-8">
+          <MapView isActive={viewMode === "map"} onToggleView={toggleView} />
+        </div>
+
         {/* Vendor Listings */}
-        <div className="container mx-auto max-w-6xl px-4 sm:px-6 pb-16">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
-            {filteredVendors.length > 0 ? 'Available Vendors' : 'No vendors found'}
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredVendors.map((vendor) => (
-              <div 
-                key={vendor.id}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 animate-fade-in"
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                    {vendor.name}
-                  </h3>
-                  <div className="flex items-center bg-green-100 dark:bg-green-900/30 text-[#2E7D32] dark:text-green-400 px-2 py-1 rounded-full text-sm">
-                    <Award className="h-3 w-3 mr-1" />
-                    {vendor.rating}
+        {viewMode === "list" && (
+          <div className="container mx-auto max-w-6xl px-4 sm:px-6 pb-16">
+            <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+              {filteredVendors.length > 0 ? 'Available Vendors' : 'No vendors found'}
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredVendors.map((vendor) => (
+                <div 
+                  key={vendor.id}
+                  className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 animate-fade-in"
+                >
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                      {vendor.name}
+                    </h3>
+                    <div className="flex items-center bg-green-100 dark:bg-green-900/30 text-[#2E7D32] dark:text-green-400 px-2 py-1 rounded-full text-sm">
+                      <Award className="h-3 w-3 mr-1" />
+                      {vendor.rating}
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 flex items-center text-sm mb-2">
+                    <MapPin className="h-4 w-4 mr-1 text-[#2E7D32]" />
+                    {vendor.location} • {vendor.distance}
+                  </p>
+                  
+                  <p className="text-gray-800 dark:text-gray-200 mb-4">
+                    <span className="font-medium">Specialty:</span> {vendor.specialty}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {vendor.tags.map((tag, index) => (
+                      <span 
+                        key={index} 
+                        className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="flex justify-between mt-4">
+                    <Button variant="outline" className="text-[#2E7D32] border-[#2E7D32]">
+                      View Profile
+                    </Button>
+                    <Button className="bg-[#2E7D32] hover:bg-green-700 text-white">
+                      <MessageSquare className="h-4 w-4 mr-2" />
+                      Connect
+                    </Button>
                   </div>
                 </div>
-                
-                <p className="text-gray-600 dark:text-gray-300 flex items-center text-sm mb-2">
-                  <MapPin className="h-4 w-4 mr-1 text-[#2E7D32]" />
-                  {vendor.location} • {vendor.distance}
-                </p>
-                
-                <p className="text-gray-800 dark:text-gray-200 mb-4">
-                  <span className="font-medium">Specialty:</span> {vendor.specialty}
-                </p>
-                
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {vendor.tags.map((tag, index) => (
-                    <span 
-                      key={index} 
-                      className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex justify-between mt-4">
-                  <Button variant="outline" className="text-[#2E7D32] border-[#2E7D32]">
-                    View Profile
-                  </Button>
-                  <Button className="bg-[#2E7D32] hover:bg-green-700 text-white">
-                    <MessageSquare className="h-4 w-4 mr-2" />
-                    Connect
-                  </Button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </main>
       <Footer />
     </div>
