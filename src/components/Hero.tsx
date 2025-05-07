@@ -54,9 +54,14 @@ const Hero = () => {
                 alt="Person using AfriTap mobile banking" 
                 className="relative z-10 rounded-2xl shadow-xl animate-bounce-subtle"
               />
-              <div className="absolute -bottom-6 -right-6 h-24 w-24 bg-[#2E7D32] rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg">No WiFi<br />Needed</span>
-              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center mt-16">
+          <div className="bg-[#2E7D32] rounded-full h-24 w-24 flex items-center justify-center shadow-lg animate-pulse-nfc">
+            <div className="text-center">
+              <Wifi className="h-8 w-8 text-white mx-auto" />
+              <span className="text-white font-bold text-sm mt-1 block">No WiFi<br />Needed</span>
             </div>
           </div>
         </div>
