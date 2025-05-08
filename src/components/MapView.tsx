@@ -4,6 +4,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from './ui/button';
 import { MapPin, List } from 'lucide-react';
+import { Input } from './ui/input';
 
 // Sample coordinates for vendors (would come from real data in production)
 const VENDOR_LOCATIONS = [
@@ -13,6 +14,8 @@ const VENDOR_LOCATIONS = [
   { id: 4, name: "MediQuick Pharmacy", coordinates: [-0.1870, 5.6037], rating: 4.7 }, // Accra
   { id: 5, name: "Solar Solutions", coordinates: [32.5825, 0.3476], rating: 4.6 }, // Kampala
 ];
+    // Default Mapbox token
+const DEFAULT_MAPBOX_TOKEN = 'pk.eyJ1IjoidGNyb3duMTAiLCJhIjoiY21hZTFtbmlsMDJoODJqc2N0NDhzeG5kaCJ9.9MNhyHrNYavyPoduPKy2LQ';
 
 interface MapViewProps {
   isActive: boolean;
@@ -26,19 +29,28 @@ const MapView: React.FC<MapViewProps> = ({ isActive, onToggleView }) => {
   const [mapReady, setMapReady] = useState(false);
   const isMobile = useIsMobile();
   
-  // Placeholder for API key - In production, use environment variables
-  const [mapboxToken, setMapboxToken] = useState<string>('');
+  // Always use the default token unless overridden from localStorage
+  const [mapboxToken, setMapboxToken] = useState<string>(DEFAULT_MAPBOX_TOKEN);
+  const [tokenInput, setTokenInput] = useState('');
+  const [showTokenInput, setShowTokenInput] = useState(false);
+
+  const handleSetToken = () => {
+    if (tokenInput.trim()) {
+      setMapboxToken(tokenInput);
+      setShowTokenInput(false);
+      localStorage.setItem('mapbox_token', tokenInput);
+    }
+  };
 
   useEffect(() => {
-    // For demo purposes, we'll use a prompt to get the token
-    // In production, this should come from environment variables or a secure backend
-    if (!mapboxToken) {
-      const token = prompt("Please enter your Mapbox public token (get one at mapbox.com):");
-      if (token) {
-        setMapboxToken(token);
-      }
+    // Check if we have a custom token in localStorage
+    const savedToken = localStorage.getItem('mapbox_token');
+    if (savedToken) {
+      setMapboxToken(savedToken);
     }
-  }, [mapboxToken]);
+    // We no longer set showTokenInput to true by default
+  }, []);
+
 
   useEffect(() => {
     if (!isActive || !mapContainer.current || !mapboxToken) return;
@@ -129,14 +141,40 @@ const MapView: React.FC<MapViewProps> = ({ isActive, onToggleView }) => {
         <List className="h-4 w-4 mr-2" />
         List View
       </Button>
-      {!mapboxToken && (
+      {showTokenInput && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-lg">
-          <div className="bg-white p-6 rounded-lg max-w-md text-center">
+          <div className="bg-white p-6 rounded-lg max-w-md">
             <h3 className="text-lg font-bold mb-2">Mapbox Token Required</h3>
-            <p className="mb-4">Please refresh and enter your Mapbox public token when prompted.</p>
+            <p className="mb-4">
+            Enter a custom Mapbox token if you want to use your own instead of the default one.            </p>
+            <div className="space-y-4">
+              <Input
+                type="text"
+                value={tokenInput}
+                onChange={(e) => setTokenInput(e.target.value)}
+                placeholder="Enter your Mapbox public token"
+                className="w-full"
+              />
+              <Button 
+                onClick={handleSetToken}
+                className="w-full bg-[#2E7D32] hover:bg-green-700"
+              >
+                Save Token
+              </Button>
+              <p className="text-xs text-gray-500">
+                This will be saved in your browser's local storage for convenience.
+              </p>
+            </div>
           </div>
         </div>
       )}
+      <Button 
+        onClick={() => setShowTokenInput(true)}
+        className="absolute top-4 right-16 bg-white text-gray-800 hover:bg-gray-200 shadow-lg"
+        size="sm"
+      >
+        Change API Key
+      </Button>
     </div>
   );
 };
