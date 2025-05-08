@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import VendorNetwork from "./pages/VendorNetwork";
 import { WalletProvider } from "./context/WalletContext";
+import WhatsAppButton from "./components/WhatsAppButton";
+
 
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +25,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <WhatsAppButton />
       </TooltipProvider>
     </WalletProvider>
     
