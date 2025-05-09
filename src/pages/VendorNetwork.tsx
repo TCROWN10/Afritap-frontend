@@ -6,6 +6,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useToast } from "@/components/ui/use-toast";
 import MapView from '@/components/MapView';
+import VendorProfile from '@/components/VendorProfile';
+import ConnectDialog from '@/components/ConnectDialog';
 
 // Mock vendor data
 const vendorData = [
@@ -17,6 +19,13 @@ const vendorData = [
     specialty: "Fresh Produce",
     distance: "0.8 km",
     tags: ["grocery", "produce", "organic"],
+    bio: "With over 10 years of experience in fresh produce, I offer the finest selection of fruits and vegetables sourced directly from local farms.",
+    contactInfo: {
+      phone: "+234 812 345 6780",
+      email: "sarah@marketstall.com"
+    },
+    businessHours: "Mon-Sat: 8:00 AM - 6:00 PM",
+    products: ["Fruits", "Vegetables", "Spices", "Grains"]
   },
   { 
     id: 2, 
@@ -26,6 +35,13 @@ const vendorData = [
     specialty: "Mobile Repairs & Accessories",
     distance: "1.2 km",
     tags: ["tech", "repairs", "phones"],
+    bio: "We provide fast and reliable repairs for all major phone brands and sell genuine accessories at competitive prices.",
+    contactInfo: {
+      phone: "+254 712 345 678",
+      email: "support@technow.co.ke"
+    },
+    businessHours: "Mon-Fri: 9:00 AM - 7:00 PM, Sat: 10:00 AM - 5:00 PM",
+    products: ["Phone Repairs", "Screen Protectors", "Cases", "Chargers"]
   },
   { 
     id: 3, 
@@ -35,6 +51,13 @@ const vendorData = [
     specialty: "Traditional Fabrics & Clothing",
     distance: "3.5 km",
     tags: ["fashion", "textile", "traditional"],
+    bio: "Family-owned textile business specializing in handcrafted traditional fabrics and garments that celebrate African heritage.",
+    contactInfo: {
+      phone: "+234 905 678 1234",
+      email: "info@adamustextiles.com"
+    },
+    businessHours: "Mon-Sat: 9:00 AM - 8:00 PM",
+    products: ["Ankara Fabrics", "Traditional Attire", "Custom Tailoring"]
   },
   { 
     id: 4, 
@@ -44,6 +67,13 @@ const vendorData = [
     specialty: "Pharmaceuticals & Health Products",
     distance: "2.1 km",
     tags: ["health", "medicine", "pharmacy"],
+    bio: "A trusted pharmacy providing essential medicines, health supplements, and medical consultations with registered pharmacists.",
+    contactInfo: {
+      phone: "+233 24 123 4567",
+      email: "care@mediquick.com.gh"
+    },
+    businessHours: "Mon-Sun: 8:00 AM - 10:00 PM",
+    products: ["Prescription Drugs", "OTC Medicines", "First Aid", "Supplements"]
   },
   { 
     id: 5, 
@@ -53,6 +83,13 @@ const vendorData = [
     specialty: "Solar Products & Installation",
     distance: "4.3 km",
     tags: ["energy", "solar", "electronics"],
+    bio: "We provide sustainable energy solutions through quality solar products and professional installation services for homes and businesses.",
+    contactInfo: {
+      phone: "+256 77 123 4567",
+      email: "info@solarsolutions.ug"
+    },
+    businessHours: "Mon-Fri: 8:30 AM - 5:30 PM",
+    products: ["Solar Panels", "Inverters", "Batteries", "Solar Lighting"]
   },
 ];
 
@@ -60,6 +97,9 @@ const VendorNetwork = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredVendors, setFilteredVendors] = useState(vendorData);
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
+  const [selectedVendor, setSelectedVendor] = useState<typeof vendorData[0] | null>(null);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isConnectOpen, setIsConnectOpen] = useState(false);
   const { toast } = useToast();
 
   const handleSearch = (e: React.FormEvent) => {
@@ -101,6 +141,16 @@ const VendorNetwork = () => {
       title: `Switched to ${viewMode === "list" ? "map" : "list"} view`,
       duration: 1500,
     });
+  };
+
+  const handleViewProfile = (vendor: typeof vendorData[0]) => {
+    setSelectedVendor(vendor);
+    setIsProfileOpen(true);
+  };
+
+  const handleConnect = (vendor: typeof vendorData[0]) => {
+    setSelectedVendor(vendor);
+    setIsConnectOpen(true);
   };
 
   return (
@@ -251,10 +301,17 @@ const VendorNetwork = () => {
                   </div>
                   
                   <div className="flex justify-between mt-4">
-                    <Button variant="outline" className="text-[#2E7D32] border-[#2E7D32]">
+                  <Button 
+                      variant="outline" 
+                      className="text-[#2E7D32] border-[#2E7D32]"
+                      onClick={() => handleViewProfile(vendor)}
+                    >
                       View Profile
                     </Button>
-                    <Button className="bg-[#2E7D32] hover:bg-green-700 text-white">
+                    <Button 
+                      className="bg-[#2E7D32] hover:bg-green-700 text-white"
+                      onClick={() => handleConnect(vendor)}
+                    >
                       <MessageSquare className="h-4 w-4 mr-2" />
                       Connect
                     </Button>
@@ -266,6 +323,24 @@ const VendorNetwork = () => {
         )}
       </main>
       <Footer />
+          
+      {/* Vendor Profile Dialog */}
+      {selectedVendor && (
+        <VendorProfile
+          vendor={selectedVendor}
+          isOpen={isProfileOpen}
+          onClose={() => setIsProfileOpen(false)}
+        />
+      )}
+      
+      {/* Connect Dialog */}
+      {selectedVendor && (
+        <ConnectDialog
+          vendorName={selectedVendor.name}
+          isOpen={isConnectOpen}
+          onClose={() => setIsConnectOpen(false)}
+        />
+      )}
     </div>
   );
 };

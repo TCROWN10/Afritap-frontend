@@ -5,14 +5,15 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from './ui/button';
 import { MapPin, List } from 'lucide-react';
 import { Input } from './ui/input';
+import { useToast } from "@/components/ui/use-toast";
 
 // Sample coordinates for vendors (would come from real data in production)
 const VENDOR_LOCATIONS = [
-  { id: 1, name: "Sarah's Market Stall", coordinates: [3.3792, 6.5244], rating: 4.8 }, // Lagos
-  { id: 2, name: "TechNow Solutions", coordinates: [36.8219, -1.2921], rating: 4.5 }, // Nairobi
-  { id: 3, name: "Adamu's Textiles", coordinates: [8.5167, 12.0000], rating: 4.9 }, // Kano
-  { id: 4, name: "MediQuick Pharmacy", coordinates: [-0.1870, 5.6037], rating: 4.7 }, // Accra
-  { id: 5, name: "Solar Solutions", coordinates: [32.5825, 0.3476], rating: 4.6 }, // Kampala
+    { id: 1, name: "Sarah's Market Stall", coordinates: [3.3792, 6.5244], rating: 4.8, specialty: "Fresh Produce" }, // Lagos
+    { id: 2, name: "TechNow Solutions", coordinates: [36.8219, -1.2921], rating: 4.5, specialty: "Mobile Repairs & Accessories" }, // Nairobi
+    { id: 3, name: "Adamu's Textiles", coordinates: [8.5167, 12.0000], rating: 4.9, specialty: "Traditional Fabrics & Clothing" }, // Kano
+    { id: 4, name: "MediQuick Pharmacy", coordinates: [-0.1870, 5.6037], rating: 4.7, specialty: "Pharmaceuticals & Health Products" }, // Accra
+    { id: 5, name: "Solar Solutions", coordinates: [32.5825, 0.3476], rating: 4.6, specialty: "Solar Products & Installation" }, // Kampala
 ];
     // Default Mapbox token
 const DEFAULT_MAPBOX_TOKEN = 'pk.eyJ1IjoidGNyb3duMTAiLCJhIjoiY21hZTFtbmlsMDJoODJqc2N0NDhzeG5kaCJ9.9MNhyHrNYavyPoduPKy2LQ';
@@ -20,14 +21,16 @@ const DEFAULT_MAPBOX_TOKEN = 'pk.eyJ1IjoidGNyb3duMTAiLCJhIjoiY21hZTFtbmlsMDJoODJ
 interface MapViewProps {
   isActive: boolean;
   onToggleView: () => void;
+  onViewVendor?: (vendorId: number) => void;
 }
 
-const MapView: React.FC<MapViewProps> = ({ isActive, onToggleView }) => {
+const MapView: React.FC<MapViewProps> = ({ isActive, onToggleView, onViewVendor }) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const markers = useRef<mapboxgl.Marker[]>([]);
   const [mapReady, setMapReady] = useState(false);
   const isMobile = useIsMobile();
+  const { toast } = useToast();
   
   // Always use the default token unless overridden from localStorage
   const [mapboxToken, setMapboxToken] = useState<string>(DEFAULT_MAPBOX_TOKEN);
@@ -95,9 +98,43 @@ const MapView: React.FC<MapViewProps> = ({ isActive, onToggleView }) => {
     
     // Add markers for each vendor
     VENDOR_LOCATIONS.forEach(vendor => {
-      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-        `<strong>${vendor.name}</strong><br>Rating: ${vendor.rating}⭐`
-      );
+      // Create a custom popup with a View Profile button
+      const popupContent = document.createElement('div');
+      popupContent.className = 'vendor-popup';
+      popupContent.innerHTML = `
+        <div class="p-2">
+          <h4 class="font-bold text-base mb-1">${vendor.name}</h4>
+          <p class="text-sm mb-2">Rating: ${vendor.rating}⭐</p>
+          <p class="text-sm mb-3">${vendor.specialty}</p>
+          <button class="view-profile-btn bg-[#2E7D32] text-white text-sm py-1 px-3 rounded w-full hover:bg-green-700">
+            View Profile
+          </button>
+        </div>
+      `;
+
+      const popup = new mapboxgl.Popup({ offset: 25 })
+        .setDOMContent(popupContent);
+
+      // Add event listener to the View Profile button inside the popup
+      popup.on('open', () => {
+        const button = document.querySelector('.view-profile-btn');
+        if (button) {
+          button.addEventListener('click', () => {
+            // Find the matching vendor in the VendorNetwork component's data
+            if (onViewVendor) {
+              onViewVendor(vendor.id);
+            } else {
+              // Fallback if the callback is not provided
+              toast({
+                title: "View Profile",
+                description: `Viewing profile for ${vendor.name}`,
+                duration: 3000,
+              });
+            }
+            popup.remove(); // Close the popup after clicking
+          });
+        }
+      });
 
       const el = document.createElement('div');
       el.className = 'custom-marker';
@@ -116,7 +153,7 @@ const MapView: React.FC<MapViewProps> = ({ isActive, onToggleView }) => {
       
       markers.current.push(marker);
     });
-  }, [mapReady]);
+}, [mapReady, onViewVendor, toast]);
 
   // Handle responsive layout
   useEffect(() => {
